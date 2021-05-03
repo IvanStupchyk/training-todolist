@@ -21,6 +21,7 @@ type TodoListPropsType = {
 }
 
 function TodoList(props: TodoListPropsType) {
+    // debugger
     const tasks = props.tasks.map(t => {
         const changeStatus = () => props.changeStatus(t.id, props.id)
         const deleteTask = () => props.deleteTask(t.id, props.id)

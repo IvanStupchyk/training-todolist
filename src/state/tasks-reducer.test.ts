@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TasksStateType} from "../App";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC, TasksReducer} from "./tasks-reducer";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC, tasksReducer} from "./tasks-reducer";
 
 test('task should be deleted', () => {
     const todoListID1 = v1()
@@ -20,7 +20,7 @@ test('task should be deleted', () => {
         ]
     }
 
-    const endTasks = TasksReducer(startTasks, DeleteTaskAC(taskID, todoListID1))
+    const endTasks = tasksReducer(startTasks, DeleteTaskAC(taskID, todoListID1))
 
     expect(endTasks[todoListID1].length).toBe(2)
 })
@@ -43,7 +43,7 @@ test('task should be added', () => {
         ]
     }
 
-    const endTasks = TasksReducer(startTasks, AddTaskAC('titled', todoListID1))
+    const endTasks = tasksReducer(startTasks, AddTaskAC('titled', todoListID1))
 
     expect(endTasks[todoListID1].length).toBe(4)
     expect(endTasks[todoListID1][endTasks[todoListID1].length - 1].title).toBe('titled')
@@ -67,7 +67,7 @@ test('task status should be changed', () => {
         ]
     }
 
-    const endTasks = TasksReducer(startTasks, ChangeTaskStatusAC(taskID, todoListID1))
+    const endTasks = tasksReducer(startTasks, ChangeTaskStatusAC(taskID, todoListID1))
 
     expect(endTasks[todoListID1][1].isDone).toBe(false)
 })
@@ -91,7 +91,7 @@ test('task content should be changed', () => {
         ]
     }
 
-    const endTasks = TasksReducer(startTasks, ChangeTaskTitleAC('aloha',taskID, todoListID1))
+    const endTasks = tasksReducer(startTasks, ChangeTaskTitleAC('aloha',taskID, todoListID1))
 
     expect(endTasks[todoListID1][1].title).toBe('aloha')
 })
