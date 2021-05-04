@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useReducer} from "react";
 import "./App.css";
 import TodoList from "./Todolist";
 import {v1} from "uuid";
@@ -6,12 +6,11 @@ import {AddTaskOrTodoList} from "./AddTaskOrTodoList";
 import {AppBar, Button, Container, IconButton, Toolbar, Typography, Grid, Paper} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
-    AddTodoListTypeAC,
-    ChangeFilterValueTypeAC, ChangeTodoListNameTypeAC,
-    RemoveTodoListAC,
     todoListsReducer
 } from "./state/todolists-reducer";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {tasksReducer} from "./state/tasks-reducer";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC} from "./state/tasks-actions";
+import {AddTodoListAC, ChangeFilterValueAC, ChangeTodoListTitleAC, DeleteTodoListAC} from "./state/todolists-actions";
 
 export type TaskType = {
     id: string
@@ -53,9 +52,8 @@ function AppWithReducers() {
         ]
     })
 
-
-    const deleteTask = (idTask: string, idTodoList: string) => {
-        dispatchToTasksReducer(DeleteTaskAC(idTask, idTodoList))
+    const deleteTask = (taskID: string, todoListID: string) => {
+        dispatchToTasksReducer(DeleteTaskAC(taskID, todoListID))
     }
 
     const filterTasks = (todoList: TodoListType) => {
@@ -69,36 +67,36 @@ function AppWithReducers() {
         }
     }
 
-    const getDataType = (data: FilterType, idTodoList: string) => {
-        dispatchToTodoListsReducer(ChangeFilterValueTypeAC(idTodoList, data))
+    const changeFilterValue = (todoListID: string, filter: FilterType) => {
+        dispatchToTodoListsReducer(ChangeFilterValueAC(todoListID, filter))
     }
 
-    const addTask = (title: string, idTodoList: string) => {
-        dispatchToTasksReducer(AddTaskAC(title, idTodoList))
+    const addTask = (title: string, todoListID: string) => {
+        dispatchToTasksReducer(AddTaskAC(title, todoListID))
     }
 
-    const changeStatus = (idTask: string, idTodoList: string) => {
-        dispatchToTasksReducer(ChangeTaskStatusAC(idTask, idTodoList))
+    const changeTaskStatus = (taskID: string, todoListID: string) => {
+        dispatchToTasksReducer(ChangeTaskStatusAC(taskID, todoListID))
     }
 
     const deleteTodoList = (IdTodoList: string) => {
-        const action = RemoveTodoListAC(IdTodoList)
+        const action = DeleteTodoListAC(IdTodoList)
         dispatchToTodoListsReducer(action)
         dispatchToTasksReducer(action)
     }
 
-    const addItem = (title: string) => {
-        const action = AddTodoListTypeAC(title)
+    const addTodoList = (title: string) => {
+        const action = AddTodoListAC(title)
         dispatchToTodoListsReducer(action)
         dispatchToTasksReducer(action)
     }
 
-    const changeValueEditableSpan = (idTask: string, idTodoList: string, value: string) => {
-        dispatchToTasksReducer(ChangeTaskTitleAC(value, idTask, idTodoList))
+    const changeTaskTitle = (title: string, taskID: string, todoListID: string) => {
+        dispatchToTasksReducer(ChangeTaskTitleAC(title, taskID, todoListID))
     }
 
-    const changeTodoListTitle = (idTodoList: string, value: string) => {
-        dispatchToTodoListsReducer(ChangeTodoListNameTypeAC(idTodoList, value))
+    const changeTodoListTitle = (todoListID: string, title: string) => {
+        dispatchToTodoListsReducer(ChangeTodoListTitleAC(todoListID, title))
     }
 
     return (
@@ -119,7 +117,7 @@ function AppWithReducers() {
 
             <Container fixed>
                 <Grid container style={{padding: "10px 0"}}>
-                    <AddTaskOrTodoList addTask={addItem}/>
+                    <AddTaskOrTodoList addTodoList={addTodoList}/>
                 </Grid>
 
                 <Grid container spacing={4}>
@@ -132,12 +130,12 @@ function AppWithReducers() {
                                               title={tl.title}
                                               tasks={filterTasks(tl)}
                                               deleteTask={deleteTask}
-                                              getDataType={getDataType}
+                                              changeFilterValue={changeFilterValue}
                                               addTask={addTask}
                                               filter={tl.filter}
-                                              changeStatus={changeStatus}
+                                              changeTaskStatus={changeTaskStatus}
                                               deleteTodoList={deleteTodoList}
-                                              changeValueEditableSpan={changeValueEditableSpan}
+                                              changeTaskTitle={changeTaskTitle}
                                               changeTodoListTitle={changeTodoListTitle}
                                     />
                                 </Paper>

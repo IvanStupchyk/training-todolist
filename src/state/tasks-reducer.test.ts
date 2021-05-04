@@ -1,6 +1,6 @@
 import {v1} from "uuid";
-import {TasksStateType} from "../App";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC, tasksReducer} from "./tasks-reducer";
+import {tasksReducer, TasksStateType} from "./tasks-reducer";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC} from "./tasks-actions";
 
 test('task should be deleted', () => {
     const todoListID1 = v1()
@@ -46,7 +46,7 @@ test('task should be added', () => {
     const endTasks = tasksReducer(startTasks, AddTaskAC('titled', todoListID1))
 
     expect(endTasks[todoListID1].length).toBe(4)
-    expect(endTasks[todoListID1][endTasks[todoListID1].length - 1].title).toBe('titled')
+    expect(endTasks[todoListID1][0].title).toBe('titled')
 })
 
 test('task status should be changed', () => {

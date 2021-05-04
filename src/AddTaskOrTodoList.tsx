@@ -3,7 +3,7 @@ import {Button, IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type AddTaskOrTodoListPropsType = {
-    addTask: (title: string) => void
+    addTodoList: (title: string) => void
 }
 
 export const AddTaskOrTodoList = (props: AddTaskOrTodoListPropsType) => {
@@ -17,7 +17,7 @@ export const AddTaskOrTodoList = (props: AddTaskOrTodoListPropsType) => {
 
     const addTask = () => {
         if (title.trim()) {
-            props.addTask(title)
+            props.addTodoList(title)
             setTitle('')
             setError('')
         } else {

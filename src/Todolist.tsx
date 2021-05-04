@@ -1,31 +1,31 @@
 import React from "react";
-import {FilterType, TaskType} from "./App";
 import "./App.css"
 import {AddTaskOrTodoList} from "./AddTaskOrTodoList";
 import {EditableSpan} from "./EditableSpan";
 import {Button, ButtonGroup, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {TaskType} from "./state/tasks-reducer";
+import {FilterType} from "./state/todolists-reducer";
 
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
-    deleteTask: (idTask: string, idTodoList: string) => void
-    getDataType: (data: FilterType, idTodoList: string) => void
-    addTask: (title: string, idTodoList: string) => void
+    deleteTask: (taskID: string, todoListID: string) => void
+    changeFilterValue: (todoListID: string, filter: FilterType) => void
+    addTask: (title: string, todoListID: string) => void
     id: string
     filter: FilterType
-    changeStatus: (idTask: string, idTodoList: string) => void
-    deleteTodoList: (IdTodoList: string) => void
-    changeValueEditableSpan: (value: string, idTask: string, idTodoList: string) => void
-    changeTodoListTitle: (idTodoList: string, value: string) => void
+    changeTaskStatus: (taskID: string, todoListID: string) => void
+    deleteTodoList: (todoListID: string) => void
+    changeTaskTitle: (title: string, taskID: string, todoListID: string) => void
+    changeTodoListTitle: (idTodoList: string, title: string) => void
 }
 
 function TodoList(props: TodoListPropsType) {
-    // debugger
     const tasks = props.tasks.map(t => {
-        const changeStatus = () => props.changeStatus(t.id, props.id)
+        const changeStatus = () => props.changeTaskStatus(t.id, props.id)
         const deleteTask = () => props.deleteTask(t.id, props.id)
-        const changeValueEditableSpan = (value: string) => props.changeValueEditableSpan(t.id, props.id, value)
+        const changeValueEditableSpan = (value: string) => props.changeTaskTitle(value, t.id, props.id)
 
         return (
             <li key={t.id} className={t.isDone ? 'is-done' : ''}>
@@ -46,9 +46,9 @@ function TodoList(props: TodoListPropsType) {
 
     const changeTodoListTitle = (value: string) => props.changeTodoListTitle(props.id, value)
 
-    const setAllFilterValue = () => props.getDataType('all', props.id)
-    const setActiveFilterValue = () => props.getDataType('active', props.id)
-    const setCompletedFilterValue = () => props.getDataType('completed', props.id)
+    const setAllFilterValue = () => props.changeFilterValue(props.id,'all')
+    const setActiveFilterValue = () => props.changeFilterValue(props.id,'active')
+    const setCompletedFilterValue = () => props.changeFilterValue(props.id, 'completed')
 
     return (
         <div>
@@ -65,7 +65,7 @@ function TodoList(props: TodoListPropsType) {
                 </Button>
             </h3>
 
-            <AddTaskOrTodoList addTask={addTask}/>
+            <AddTaskOrTodoList addTodoList={addTask}/>
 
             <ul style={{listStyle: "none"}}>
                 {tasks}

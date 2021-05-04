@@ -5,61 +5,61 @@ import {AddTaskOrTodoList} from "./AddTaskOrTodoList";
 import {AppBar, Button, Container, IconButton, Toolbar, Typography, Grid, Paper} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
-    AddTodoListTypeAC,
-    ChangeFilterValueTypeAC, ChangeTodoListNameTypeAC, FilterType,
-    RemoveTodoListAC,
+    FilterType,
     TodoListType
 } from "./state/todolists-reducer";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC, TasksStateType} from "./state/tasks-reducer";
+import {TasksStateType} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/redux-store";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, DeleteTaskAC} from "./state/tasks-actions";
+import {AddTodoListAC, ChangeFilterValueAC, ChangeTodoListTitleAC, DeleteTodoListAC} from "./state/todolists-actions";
 
 function AppWithRedux() {
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootState, Array<TodoListType>>(state => state.todoLists)
-    const allTasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
+    const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
 
-    const deleteTask = (idTask: string, idTodoList: string) => {
-        dispatch(DeleteTaskAC(idTask, idTodoList))
+    const deleteTask = (taskID: string, todoListID: string) => {
+        dispatch(DeleteTaskAC(taskID, todoListID))
     }
 
     const filterTasks = (todoList: TodoListType) => {
         switch (todoList.filter) {
             case 'active':
-                return allTasks[todoList.id].filter(t => !t.isDone)
+                return tasks[todoList.id].filter(t => !t.isDone)
             case 'completed':
-                return allTasks[todoList.id].filter(t => t.isDone)
+                return tasks[todoList.id].filter(t => t.isDone)
             default:
-                return allTasks[todoList.id]
+                return tasks[todoList.id]
         }
     }
 
-    const getDataType = (data: FilterType, idTodoList: string) => {
-        dispatch(ChangeFilterValueTypeAC(idTodoList, data))
+    const changeFilterValue = (todoListID: string, filter: FilterType) => {
+        dispatch(ChangeFilterValueAC(todoListID, filter))
     }
 
-    const addTask = (title: string, idTodoList: string) => {
-        dispatch(AddTaskAC(title, idTodoList))
+    const addTask = (title: string, todoListID: string) => {
+        dispatch(AddTaskAC(title, todoListID))
     }
 
-    const changeStatus = (idTask: string, idTodoList: string) => {
-        dispatch(ChangeTaskStatusAC(idTask, idTodoList))
+    const changeTaskStatus = (taskID: string, todoListID: string) => {
+        dispatch(ChangeTaskStatusAC(taskID, todoListID))
     }
 
-    const deleteTodoList = (IdTodoList: string) => {
-        dispatch(RemoveTodoListAC(IdTodoList))
+    const deleteTodoList = (todoListID: string) => {
+        dispatch(DeleteTodoListAC(todoListID))
     }
 
-    const addItem = (title: string) => {
-        dispatch(AddTodoListTypeAC(title))
+    const addTodoList = (title: string) => {
+        dispatch(AddTodoListAC(title))
     }
 
-    const changeValueEditableSpan = (idTask: string, idTodoList: string, value: string) => {
-        dispatch(ChangeTaskTitleAC(value, idTask, idTodoList))
+    const changeTaskTitle = (title: string, taskID: string, todoListID: string) => {
+        dispatch(ChangeTaskTitleAC(title, taskID, todoListID))
     }
 
-    const changeTodoListTitle = (idTodoList: string, value: string) => {
-        dispatch(ChangeTodoListNameTypeAC(idTodoList, value))
+    const changeTodoListTitle = (todoListID: string, title: string) => {
+        dispatch(ChangeTodoListTitleAC(todoListID, title))
     }
 
     return (
@@ -80,7 +80,7 @@ function AppWithRedux() {
 
             <Container fixed>
                 <Grid container style={{padding: "10px 0"}}>
-                    <AddTaskOrTodoList addTask={addItem}/>
+                    <AddTaskOrTodoList addTodoList={addTodoList}/>
                 </Grid>
 
                 <Grid container spacing={4}>
@@ -93,12 +93,12 @@ function AppWithRedux() {
                                               title={tl.title}
                                               tasks={filterTasks(tl)}
                                               deleteTask={deleteTask}
-                                              getDataType={getDataType}
+                                              changeFilterValue={changeFilterValue}
                                               addTask={addTask}
                                               filter={tl.filter}
-                                              changeStatus={changeStatus}
+                                              changeTaskStatus={changeTaskStatus}
                                               deleteTodoList={deleteTodoList}
-                                              changeValueEditableSpan={changeValueEditableSpan}
+                                              changeTaskTitle={changeTaskTitle}
                                               changeTodoListTitle={changeTodoListTitle}
                                     />
                                 </Paper>
