@@ -10,43 +10,43 @@ export enum ACTIONS_TODOLIST_TYPE {
 
 export type AddTodoListType = {
     type: ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST
-    title: string
     todoListID: string
+    payload: {title: string}
 }
 
 export const AddTodoListAC = (title: string): AddTodoListType => {
     return {
         type: ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST,
-        title,
-        todoListID: v1()
+        todoListID: v1(),
+        payload: {title}
     }
 }
 
 type ChangeFilterValueType = {
     type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_FILTER_VALUE
     todoListID: string
-    filter: FilterType
+    payload: {filter: FilterType}
 }
 
 export const ChangeFilterValueAC = (todoListID: string, filter: FilterType): ChangeFilterValueType => {
     return {
         type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_FILTER_VALUE,
         todoListID,
-        filter
+        payload: {filter}
     }
 }
 
 type ChangeTodoListTitleType = {
     type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_TITLE
     todoListID: string
-    title: string
+    payload: {title: string}
 }
 
 export const ChangeTodoListTitleAC = (todoListID: string, title: string): ChangeTodoListTitleType => {
     return {
         type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_TITLE,
         todoListID,
-        title
+        payload: {title}
     }
 }
 

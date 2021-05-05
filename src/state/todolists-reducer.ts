@@ -20,12 +20,12 @@ export let initialState: Array<TodoListType> = [
 export const todoListsReducer = (state: Array<TodoListType> = initialState, action: ActionsTodoListsType): Array<TodoListType> => {
     switch (action.type) {
         case ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST:
-            let newTodoList: TodoListType = {id: action.todoListID, title: action.title, filter: "all"}
+            let newTodoList: TodoListType = {id: action.todoListID, title: action.payload.title, filter: "all"}
             return [newTodoList, ...state]
         case ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_FILTER_VALUE:
-            return state.map(tl => tl.id === action.todoListID ? {...tl, filter: action.filter} : tl)
+            return state.map(tl => tl.id === action.todoListID ? {...tl, ...action.payload} : tl)
         case ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_TITLE:
-            return state.map((tl => tl.id === action.todoListID ? {...tl, title: action.title} : tl))
+            return state.map((tl => tl.id === action.todoListID ? {...tl, ...action.payload} : tl))
         case ACTIONS_TODOLIST_TYPE.DELETE_TODOLIST:
             return state.filter(tl => tl.id !== action.todoListID)
         default:

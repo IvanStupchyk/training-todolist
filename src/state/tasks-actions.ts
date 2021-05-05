@@ -23,15 +23,15 @@ export const DeleteTaskAC = (taskID: string, todoListID: string): DeleteTaskType
 
 type AddTaskType = {
     type: ACTIONS_TASK_TYPE.ADD_TASK
-    title: string
     todoListID: string
+    payload: {title: string}
 }
 
 export const AddTaskAC = (title: string, todoListID: string): AddTaskType => {
     return {
         type: ACTIONS_TASK_TYPE.ADD_TASK,
-        title,
-        todoListID
+        todoListID,
+        payload: {title}
     }
 }
 
@@ -51,17 +51,17 @@ export const ChangeTaskStatusAC = (taskID: string, todoListID: string): ChangeTa
 
 type ChangeTaskTitleType = {
     type: ACTIONS_TASK_TYPE.CHANGE_TASK_TITLE
-    title: string
     taskID: string
     todoListID: string
+    payload: {title: string}
 }
 
 export const ChangeTaskTitleAC = (title: string, taskID: string, todoListID: string): ChangeTaskTitleType => {
     return {
         type: ACTIONS_TASK_TYPE.CHANGE_TASK_TITLE,
-        title,
         taskID,
-        todoListID
+        todoListID,
+        payload: {title}
     }
 }
 
