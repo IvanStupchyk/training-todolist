@@ -1,5 +1,67 @@
 import {v1} from "uuid";
-import {ACTIONS_TODOLIST_TYPE, ActionsTodoListsType} from "./todolists-actions";
+
+export enum ACTIONS_TODOLIST_TYPE {
+    ADD_NEW_TODOLIST = 'todoList/todolists-actions/add-new-todolist',
+    CHANGE_TODOLIST_FILTER_VALUE = 'todoList/todolists-actions/change-todolist-filter-value',
+    CHANGE_TODOLIST_TITLE = 'todoList/todolists-actions/change-todolist-title',
+    DELETE_TODOLIST = 'todoList/todolists-actions/delete-todolist',
+}
+
+export type addTodoListType = {
+    type: ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST
+    todoListID: string
+    payload: {title: string}
+}
+
+type changeTodoListFilterValueType = {
+    type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_FILTER_VALUE
+    todoListID: string
+    payload: {filter: FilterType}
+}
+
+type changeTodoListTitleType = {
+    type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_TITLE
+    todoListID: string
+    payload: {title: string}
+}
+
+export type deleteTodoListType = {
+    type: ACTIONS_TODOLIST_TYPE.DELETE_TODOLIST
+    todoListID: string
+}
+
+export const addTodoListAC = (title: string): addTodoListType => {
+    return {
+        type: ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST,
+        todoListID: v1(),
+        payload: {title}
+    }
+}
+
+export const changeTodoListFilterValueAC = (todoListID: string, filter: FilterType): changeTodoListFilterValueType => {
+    return {
+        type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_FILTER_VALUE,
+        todoListID,
+        payload: {filter}
+    }
+}
+
+export const changeTodoListTitleAC = (todoListID: string, title: string): changeTodoListTitleType => {
+    return {
+        type: ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_TITLE,
+        todoListID,
+        payload: {title}
+    }
+}
+
+export const deleteTodoListAC = (todoListID: string): deleteTodoListType => {
+    return {
+        type: ACTIONS_TODOLIST_TYPE.DELETE_TODOLIST,
+        todoListID
+    }
+}
+
+export type todoListActionsType = addTodoListType | changeTodoListFilterValueType | changeTodoListTitleType | deleteTodoListType
 
 export type FilterType = 'all' | 'completed' | 'active'
 
@@ -17,17 +79,17 @@ export let initialState: Array<TodoListType> = [
     {id: todoListID2, title: 'What to buy', filter: 'all'}
 ]
 
-export const todoListsReducer = (state: Array<TodoListType> = initialState, action: ActionsTodoListsType): Array<TodoListType> => {
+export const todoListsReducer = (state: Array<TodoListType> = initialState, action: todoListActionsType): Array<TodoListType> => {
     switch (action.type) {
         case ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST:
             let newTodoList: TodoListType = {id: action.todoListID, title: action.payload.title, filter: "all"}
             return [newTodoList, ...state]
         case ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_FILTER_VALUE:
-            return state.map(tl => tl.id === action.todoListID ? {...tl, ...action.payload} : tl)
+            return state.map(td => td.id === action.todoListID ? {...td, ...action.payload} : td)
         case ACTIONS_TODOLIST_TYPE.CHANGE_TODOLIST_TITLE:
-            return state.map((tl => tl.id === action.todoListID ? {...tl, ...action.payload} : tl))
+            return state.map(td => td.id === action.todoListID ? {...td, ...action.payload} : td)
         case ACTIONS_TODOLIST_TYPE.DELETE_TODOLIST:
-            return state.filter(tl => tl.id !== action.todoListID)
+            return state.filter(td => td.id !== action.todoListID)
         default:
             return state
     }
