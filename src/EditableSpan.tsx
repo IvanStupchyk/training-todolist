@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useCallback, useState} from "react";
 import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {
@@ -6,7 +6,7 @@ type EditableSpanPropsType = {
     changeValueEditableSpan: (value: string) => void
 }
 
-export const EditableSpan = (props: EditableSpanPropsType) => {
+export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     const [edit, setEdit] = useState(false)
     const [value, setValue] = useState('')
 
@@ -34,4 +34,4 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
             :
             <span onDoubleClick={changeInput}>{props.title}</span>
     )
-}
+})

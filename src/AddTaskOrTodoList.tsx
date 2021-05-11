@@ -6,7 +6,7 @@ type AddTaskOrTodoListPropsType = {
     addTodoList: (title: string) => void
 }
 
-export const AddTaskOrTodoList = (props: AddTaskOrTodoListPropsType) => {
+export const AddTaskOrTodoList = React.memo((props: AddTaskOrTodoListPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -43,4 +43,4 @@ export const AddTaskOrTodoList = (props: AddTaskOrTodoListPropsType) => {
             </IconButton>
         </div>
     )
-}
+})
