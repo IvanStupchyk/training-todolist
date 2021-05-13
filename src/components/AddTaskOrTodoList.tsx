@@ -1,12 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type AddTaskOrTodoListPropsType = {
     addTodoList: (title: string) => void
 }
 
-export const AddTaskOrTodoList = React.memo((props: AddTaskOrTodoListPropsType) => {
+export const AddTaskOrTodoList = React.memo(({addTodoList}: AddTaskOrTodoListPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -17,7 +17,7 @@ export const AddTaskOrTodoList = React.memo((props: AddTaskOrTodoListPropsType) 
 
     const addTask = () => {
         if (title.trim()) {
-            props.addTodoList(title)
+            addTodoList(title)
             setTitle('')
             setError('')
         } else {

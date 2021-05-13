@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {
@@ -6,18 +6,18 @@ type EditableSpanPropsType = {
     changeValueEditableSpan: (value: string) => void
 }
 
-export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
+export const EditableSpan = React.memo(({title, changeValueEditableSpan, ...restProps}: EditableSpanPropsType) => {
     const [edit, setEdit] = useState(false)
     const [value, setValue] = useState('')
 
     const changeInput = () => {
         setEdit(true)
-        setValue(props.title)
+        setValue(title)
     }
 
     const changeSpan = () => {
         setEdit(false)
-        props.changeValueEditableSpan(value)
+        changeValueEditableSpan(value)
     }
 
     const changeValue = (e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
@@ -32,6 +32,6 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
                 onChange={changeValue}
             />
             :
-            <span onDoubleClick={changeInput}>{props.title}</span>
+            <span onDoubleClick={changeInput}>{title}</span>
     )
 })

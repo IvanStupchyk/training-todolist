@@ -1,28 +1,30 @@
 import React, {useCallback} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
-import {EditableSpan} from "../EditableSpan";
+import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {TaskType} from "../state/tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, TaskType} from "../state/tasks-reducer";
+import {useDispatch} from "react-redux";
+import {Dispatch} from "redux";
+import {todoListReducersType} from "../AppWithRedux";
 
 type TaskPropsType = {
-    changeTaskStatus: (taskID: string, todoListID: string) => void
-    deleteTask: (taskID: string, todoListID: string) => void
-    changeTaskTitle: (title: string, taskID: string, todoListID: string) => void
     todoListID: string
     taskID: string
     task: TaskType
 }
 
-export const Task = React.memo((props: TaskPropsType) => {
-    const changeStatus = useCallback(() => props.changeTaskStatus(props.taskID, props.todoListID), [props.changeTaskStatus, props.taskID, props.todoListID])
-    const deleteTask = useCallback(() => props.deleteTask(props.taskID, props.todoListID), [props.deleteTask, props.taskID, props.todoListID])
-    const changeValueEditableSpan = useCallback((value: string) => props.changeTaskTitle(value, props.taskID, props.todoListID), [props.changeTaskTitle, props.taskID, props.todoListID])
+export const Task = React.memo(({todoListID, taskID, task, ...restProps}: TaskPropsType) => {
+    const dispatch = useDispatch<Dispatch<todoListReducersType>>()
+
+    const changeStatus = useCallback(() => dispatch(changeTaskStatusAC(taskID, todoListID)), [dispatch, taskID, todoListID])
+    const deleteTask = useCallback(() => dispatch(deleteTaskAC(taskID, todoListID)), [dispatch, taskID, todoListID])
+    const changeValueEditableSpan = useCallback((value: string) => dispatch(changeTaskTitleAC(value, taskID, todoListID)), [dispatch, taskID, todoListID])
 
     return (
-        <li key={props.taskID} className={props.task.isDone ? 'is-done' : ''}>
-            <Checkbox checked={props.task.isDone} onClick={changeStatus}/>
+        <li key={taskID} className={task.isDone ? 'is-done' : ''}>
+            <Checkbox checked={task.isDone} onClick={changeStatus}/>
 
-            <EditableSpan title={props.task.title} changeValueEditableSpan={changeValueEditableSpan}/>
+            <EditableSpan title={task.title} changeValueEditableSpan={changeValueEditableSpan}/>
 
             <IconButton aria-label="delete" onClick={deleteTask}>
                 <Delete fontSize="small"/>
