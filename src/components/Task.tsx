@@ -1,28 +1,42 @@
-import React, {useCallback} from "react";
+import React, {ChangeEvent, useCallback, useEffect} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, TaskType} from "../state/tasks-reducer";
+import {
+    deleteTaskAC,
+    deleteTaskTC,
+    setTasksTC,
+    updateTaskTC
+} from "../state/tasks-reducer";
 import {useDispatch} from "react-redux";
 import {Dispatch} from "redux";
 import {todoListReducersType} from "../AppWithRedux";
+import {TaskStatuses, taskType} from "../API/api";
 
 type TaskPropsType = {
     todoListID: string
     taskID: string
-    task: TaskType
+    task: taskType
 }
 
 export const Task = React.memo(({todoListID, taskID, task, ...restProps}: TaskPropsType) => {
-    const dispatch = useDispatch<Dispatch<todoListReducersType>>()
+    const dispatch = useDispatch()
 
-    const changeStatus = useCallback(() => dispatch(changeTaskStatusAC(taskID, todoListID)), [dispatch, taskID, todoListID])
-    const deleteTask = useCallback(() => dispatch(deleteTaskAC(taskID, todoListID)), [dispatch, taskID, todoListID])
-    const changeValueEditableSpan = useCallback((value: string) => dispatch(changeTaskTitleAC(value, taskID, todoListID)), [dispatch, taskID, todoListID])
+    const changeStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        let newValue = e.currentTarget.checked
+
+        dispatch(updateTaskTC(todoListID, taskID, {status: newValue ? TaskStatuses.Completed : TaskStatuses.New}))
+    }, [dispatch, taskID, todoListID])
+
+    const deleteTask = useCallback(() => dispatch(deleteTaskTC(todoListID, taskID)), [dispatch, taskID, todoListID])
+
+    const changeValueEditableSpan = useCallback((title: string) => {
+        dispatch(updateTaskTC(todoListID, taskID, {title}))
+    }, [dispatch, taskID, todoListID])
 
     return (
-        <li key={taskID} className={task.isDone ? 'is-done' : ''}>
-            <Checkbox checked={task.isDone} onClick={changeStatus}/>
+        <li key={taskID} className={task.status === TaskStatuses.Completed ? 'is-done' : ''}>
+            <Checkbox checked={task.status === TaskStatuses.Completed} onChange={changeStatus}/>
 
             <EditableSpan title={task.title} changeValueEditableSpan={changeValueEditableSpan}/>
 

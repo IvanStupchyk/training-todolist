@@ -42,12 +42,27 @@ export const todoListAPI = {
     }
 }
 
-type taskType = {
+export enum TaskStatuses {
+    New = 0,
+    inProgress = 1,
+    Completed = 2,
+    draft = 3
+}
+
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
+}
+
+export type taskType = {
     description: string
     title: string
     completed: boolean
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
     id: string
@@ -57,14 +72,14 @@ type taskType = {
 }
 
 type tasksType = {
-    item: Array<taskType>
+    items: Array<taskType>
     totalCount: number
     error: string
 }
 
 type addUpdateTaskType = {
     data: {
-        item: Array<taskType>
+        item: taskType
     }
     resultCode: number
     messages: Array<string>
@@ -74,6 +89,16 @@ type deleteTaskType = {
     resultCode: number
     messages: Array<string>
     data: {}
+}
+
+export type updateTaskModelType = {
+    title: string
+    description: string
+    completed: boolean
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
 }
 
 export const taskAPI = {
@@ -89,7 +114,7 @@ export const taskAPI = {
         return instance.delete<deleteTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
 
-    updateTask(todolistId: string, taskId: string, title: string) {
-        return instance.put<addUpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: title})
+    updateTask(todolistId: string, taskId: string, model: updateTaskModelType) {
+        return instance.put<addUpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, {...model})
     }
 }

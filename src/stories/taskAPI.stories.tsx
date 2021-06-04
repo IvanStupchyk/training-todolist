@@ -1,5 +1,5 @@
-import React, {FormEvent, useEffect, useState} from "react";
-import {taskAPI, todoListAPI} from "../API/api";
+import React, {FormEvent, useState} from "react";
+import {taskAPI} from "../API/api";
 
 export default {
     title: 'API task'
@@ -64,24 +64,24 @@ export const DeleteTask = () => {
     </div>
 }
 
-export const UpdateTask= () => {
-    const [state, setState] = useState<any>(null)
-    const [taskId, setTaskId] = useState<string>('')
-    const [todoListId, setTodoListId] = useState<string>('')
-    const [title, setTitle] = useState<string>('')
-
-    const updateTask = () => {
-        taskAPI.updateTask(todoListId, taskId, title)
-            .then(res => {
-                setState(res.data.data.item)
-            })
-    }
-
-    return <div>
-        <input placeholder={'title'} value={title} onInput={(e: FormEvent<HTMLInputElement>) => {setTitle(e.currentTarget.value)}}/>
-        <input placeholder={'taskId'} value={taskId} onInput={(e: FormEvent<HTMLInputElement>) => {setTaskId(e.currentTarget.value)}}/>
-        <input placeholder={'todoListId'} value={todoListId} onInput={(e: FormEvent<HTMLInputElement>) => {setTodoListId(e.currentTarget.value)}}/>
-        <button onClick={updateTask}>update Task</button>
-        {JSON.stringify(state)}
-    </div>
-}
+// export const UpdateTask= () => {
+//     const [state, setState] = useState<any>(null)
+//     const [taskId, setTaskId] = useState<string>('')
+//     const [todoListId, setTodoListId] = useState<string>('')
+//     const [model, setModel] = useState<string>('')
+//
+//     const updateTask = () => {
+//         taskAPI.updateTask(todoListId, taskId, model)
+//             .then(res => {
+//                 setState(res.data.data.item)
+//             })
+//     }
+//
+//     return <div>
+//         <input placeholder={'title'} value={title} onInput={(e: FormEvent<HTMLInputElement>) => {setTitle(e.currentTarget.value)}}/>
+//         <input placeholder={'taskId'} value={taskId} onInput={(e: FormEvent<HTMLInputElement>) => {setTaskId(e.currentTarget.value)}}/>
+//         <input placeholder={'todoListId'} value={todoListId} onInput={(e: FormEvent<HTMLInputElement>) => {setTodoListId(e.currentTarget.value)}}/>
+//         <button onClick={updateTask}>update Task</button>
+//         {JSON.stringify(state)}
+//     </div>
+// }
