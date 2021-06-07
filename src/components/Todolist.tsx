@@ -4,18 +4,16 @@ import {AddTaskOrTodoList} from "./AddTaskOrTodoList";
 import {EditableSpan} from "./EditableSpan";
 import {Button, ButtonGroup} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {addTaskAC, addTaskTC, setTasksTC, TasksStateType} from "../state/tasks-reducer";
+import {addTaskTC, setTasksTC, TasksStateType} from "../state/tasks-reducer";
 import {
     changeTodoListFilterValueAC,
-    changeTodoListTitleAC, changeTodoListTitleTC,
-    deleteTodoListAC, deleteTodoListTC,
+    changeTodoListTitleTC,
+    deleteTodoListTC,
     FilterType
 } from "../state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../state/redux-store";
 import {Task} from "./Task";
-import {Dispatch} from "redux";
-import {todoListReducersType} from "../AppWithRedux";
 import {TaskStatuses} from "../API/api";
 
 type TodoListPropsType = {
@@ -29,7 +27,7 @@ export const TodoList = React.memo(({title, todoListId, filter, ...restProps}: T
 
     useEffect(() => {
         dispatch(setTasksTC(todoListId))
-    }, [])
+    }, [dispatch, todoListId])
 
     const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
     let actualArrayTasks = tasks[todoListId]

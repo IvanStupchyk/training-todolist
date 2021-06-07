@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {settings} from "cluster";
 
 const instance = axios.create({
     withCredentials: true,
@@ -30,15 +29,15 @@ export const todoListAPI = {
     },
 
     createTodoList(title: string) {
-        return instance.post<ResponseType<{item: todoListType}>>(`todo-lists`, {title: title})
+        return instance.post<ResponseType<{item: todoListType}>>(`todo-lists`, {title})
     },
 
-    deleteTodoList(todolistId: string) {
-        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}`)
+    deleteTodoList(todoListId: string) {
+        return instance.delete<ResponseType<{}>>(`todo-lists/${todoListId}`)
     },
 
     updateTodoList (todoListId: string, title: string) {
-        return instance.put<ResponseType<{}>>(`todo-lists/${todoListId}`, {title: title})
+        return instance.put<ResponseType<{}>>(`todo-lists/${todoListId}`, {title})
     }
 }
 
@@ -102,19 +101,19 @@ export type updateTaskModelType = {
 }
 
 export const taskAPI = {
-    getTask(todolistId: string) {
-        return instance.get<tasksType>(`todo-lists/${todolistId}/tasks`)
+    getTask(todoListId: string) {
+        return instance.get<tasksType>(`todo-lists/${todoListId}/tasks`)
     },
 
-    addTask(todolistId: string, title: string) {
-        return instance.post<addUpdateTaskType>(`todo-lists/${todolistId}/tasks`, {title: title})
+    addTask(todoListId: string, title: string) {
+        return instance.post<addUpdateTaskType>(`todo-lists/${todoListId}/tasks`, {title: title})
     },
 
-    deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<deleteTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    deleteTask(todoListId: string, taskId: string) {
+        return instance.delete<deleteTaskType>(`todo-lists/${todoListId}/tasks/${taskId}`)
     },
 
-    updateTask(todolistId: string, taskId: string, model: updateTaskModelType) {
-        return instance.put<addUpdateTaskType>(`todo-lists/${todolistId}/tasks/${taskId}`, {...model})
+    updateTask(todoListId: string, taskId: string, model: updateTaskModelType) {
+        return instance.put<addUpdateTaskType>(`todo-lists/${todoListId}/tasks/${taskId}`, {...model})
     }
 }
