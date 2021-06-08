@@ -2,7 +2,7 @@ import React, {FormEvent, useState} from "react";
 import {taskAPI} from "../API/api";
 
 export default {
-    title: 'API task'
+    title: 'API Task'
 }
 
 export const GetTask = () => {

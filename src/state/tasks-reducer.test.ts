@@ -8,7 +8,7 @@ import {
     TasksStateType
 } from "./tasks-reducer";
 
-test('task should be deleted', () => {
+test('Task should be deleted', () => {
     const todoListID1 = v1()
     const todoListID2 = v1()
     const taskID = v1()
@@ -31,7 +31,7 @@ test('task should be deleted', () => {
     expect(endTasks[todoListID1].length).toBe(2)
 })
 
-test('task should be added', () => {
+test('Task should be added', () => {
     const todoListID1 = v1()
     const todoListID2 = v1()
     const taskID = v1()
@@ -55,7 +55,7 @@ test('task should be added', () => {
     expect(endTasks[todoListID1][0].title).toBe('titled')
 })
 
-test('task status should be changed', () => {
+test('Task status should be changed', () => {
     const todoListID1 = v1()
     const todoListID2 = v1()
     const taskID = v1()
@@ -79,7 +79,7 @@ test('task status should be changed', () => {
 })
 
 
-test('task content should be changed', () => {
+test('Task content should be changed', () => {
     const todoListID1 = v1()
     const todoListID2 = v1()
     const taskID = v1()

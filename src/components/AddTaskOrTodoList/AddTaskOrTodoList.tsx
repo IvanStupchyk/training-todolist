@@ -14,7 +14,6 @@ export const AddTaskOrTodoList = React.memo(({addTodoList}: AddTaskOrTodoListPro
         setTitle(e.currentTarget.value)
         setError("")
     }
-
     const addTask = () => {
         if (title.trim()) {
             addTodoList(title)
@@ -24,7 +23,6 @@ export const AddTaskOrTodoList = React.memo(({addTodoList}: AddTaskOrTodoListPro
             setError('Incorrect value')
         }
     }
-
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTask()
 
     return (

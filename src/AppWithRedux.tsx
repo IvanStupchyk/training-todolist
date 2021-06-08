@@ -1,16 +1,15 @@
 import React, {useCallback, useEffect} from "react";
 import "./App.css";
-import {AddTaskOrTodoList} from "./components/AddTaskOrTodoList";
+import {AddTaskOrTodoList} from "./components/AddTaskOrTodoList/AddTaskOrTodoList";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import {addTodoListTC, getTodoListsTC, todoListDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/redux-store";
-import {TodoList} from "./components/Todolist";
+import {TodoList} from "./components/Todolist/Todolist";
 
 function AppWithRedux() {
     const dispatch = useDispatch()
-
     const todoLists = useSelector<AppRootState, Array<todoListDomainType>>(state => state.todoLists)
 
     useEffect(() => {

@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../../EditableSpan/EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {deleteTaskTC, updateTaskTC} from "../state/tasks-reducer";
+import {deleteTaskTC, updateTaskTC} from "../../../state/tasks-reducer";
 import {useDispatch} from "react-redux";
-import {TaskStatuses, taskType} from "../API/api";
+import {TaskStatuses, taskType} from "../../../API/api";
 
 type TaskPropsType = {
     todoListID: string
@@ -20,9 +20,7 @@ export const Task = React.memo(({todoListID, taskID, task, ...restProps}: TaskPr
 
         dispatch(updateTaskTC(todoListID, taskID, {status: newValue ? TaskStatuses.Completed : TaskStatuses.New}))
     }, [dispatch, taskID, todoListID])
-
     const deleteTask = useCallback(() => dispatch(deleteTaskTC(todoListID, taskID)), [dispatch, taskID, todoListID])
-
     const changeValueEditableSpan = useCallback((title: string) => {
         dispatch(updateTaskTC(todoListID, taskID, {title}))
     }, [dispatch, taskID, todoListID])

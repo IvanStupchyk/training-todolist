@@ -3,7 +3,7 @@ import {AddTaskOrTodoList} from "./AddTaskOrTodoList";
 import React from "react";
 
 export default {
-    title: 'Add task or todoList',
+    title: 'Add Task or todoList',
     component: AddTaskOrTodoList
 }
 

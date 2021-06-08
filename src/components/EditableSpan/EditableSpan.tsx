@@ -14,12 +14,10 @@ export const EditableSpan = React.memo(({title, changeValueEditableSpan, ...rest
         setEdit(true)
         setValue(title)
     }
-
     const changeSpan = () => {
         setEdit(false)
         changeValueEditableSpan(value)
     }
-
     const changeValue = (e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
 
     return (

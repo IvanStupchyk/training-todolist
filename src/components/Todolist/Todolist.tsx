@@ -1,20 +1,20 @@
 import React, {useCallback, useEffect} from "react";
-import "../App.css"
-import {AddTaskOrTodoList} from "./AddTaskOrTodoList";
-import {EditableSpan} from "./EditableSpan";
+import "../../App.css"
+import {AddTaskOrTodoList} from "../AddTaskOrTodoList/AddTaskOrTodoList";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Button, ButtonGroup} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {addTaskTC, setTasksTC, TasksStateType} from "../state/tasks-reducer";
+import {addTaskTC, setTasksTC, TasksStateType} from "../../state/tasks-reducer";
 import {
     changeTodoListFilterValueAC,
     changeTodoListTitleTC,
     deleteTodoListTC,
     FilterType
-} from "../state/todolists-reducer";
+} from "../../state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "../state/redux-store";
-import {Task} from "./Task";
-import {TaskStatuses} from "../API/api";
+import {AppRootState} from "../../state/redux-store";
+import {Task} from "./Task/Task";
+import {TaskStatuses} from "../../API/api";
 
 type TodoListPropsType = {
     title: string
@@ -31,7 +31,6 @@ export const TodoList = React.memo(({title, todoListId, filter, ...restProps}: T
 
     const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
     let actualArrayTasks = tasks[todoListId]
-
     if (filter === 'active') {
         actualArrayTasks = actualArrayTasks.filter(t => t.status === TaskStatuses.New)
     }
@@ -40,14 +39,11 @@ export const TodoList = React.memo(({title, todoListId, filter, ...restProps}: T
     }
 
     const deleteTodoList = useCallback(() => dispatch(deleteTodoListTC(todoListId)), [dispatch, todoListId])
-
     const addTask = useCallback((title: string) => dispatch(addTaskTC(todoListId, title)), [dispatch, todoListId])
-
     const changeTodoListTitle = useCallback((value: string) => dispatch(changeTodoListTitleTC(todoListId, value)), [dispatch, todoListId])
-
-    const setAllFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoListId, 'all')),[dispatch, todoListId])
-    const setActiveFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoListId, 'active')),[dispatch, todoListId])
-    const setCompletedFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoListId, 'completed')),[dispatch, todoListId])
+    const setAllFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoListId, 'all')), [dispatch, todoListId])
+    const setActiveFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoListId, 'active')), [dispatch, todoListId])
+    const setCompletedFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoListId, 'completed')), [dispatch, todoListId])
 
     return (
         <div>
