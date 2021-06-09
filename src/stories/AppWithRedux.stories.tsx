@@ -1,5 +1,5 @@
-import AppWithRedux from "./AppWithRedux";
-import {ReduxStoreProviderDecorator} from "./stories/ReduxStoreProviderDecorator";
+import AppWithRedux from "../AppWithRedux";
+import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import React from "react";
 
 export default {
@@ -9,5 +9,5 @@ export default {
 }
 
 export const AppWithReduxExample = (props: any) => {
-    return <AppWithRedux/>
+    return <AppWithRedux demo={true}/>
 }

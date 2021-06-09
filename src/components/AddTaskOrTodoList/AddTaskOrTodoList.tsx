@@ -4,9 +4,10 @@ import {AddBox} from "@material-ui/icons";
 
 type AddTaskOrTodoListPropsType = {
     addTodoList: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddTaskOrTodoList = React.memo(({addTodoList}: AddTaskOrTodoListPropsType) => {
+export const AddTaskOrTodoList = React.memo(({addTodoList, disabled = false, ...restProps}: AddTaskOrTodoListPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -34,9 +35,10 @@ export const AddTaskOrTodoList = React.memo(({addTodoList}: AddTaskOrTodoListPro
                        onKeyPress={onKeyPressAddTask}
                        error={!!error}
                        helperText={error}
+                       disabled={disabled}
             />
 
-            <IconButton color="primary" onClick={addTask}>
+            <IconButton color="primary" onClick={addTask} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

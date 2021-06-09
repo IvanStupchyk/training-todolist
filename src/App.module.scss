@@ -1,0 +1,16 @@
+.isDone {
+  opacity: .5;
+}
+
+.app {
+  .headerPosition {
+    position: relative;
+  }
+  .linearProgress {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
