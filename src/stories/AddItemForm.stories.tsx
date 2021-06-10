@@ -10,7 +10,7 @@ export default {
 //const callback =  action('btn add was pressed')
 
 export const AddItemFormExample = (props: any) => {
-    return <AddTaskOrTodoList addTodoList={() => {}} />
+    return <AddTaskOrTodoList addTodoList={() => {}} todoListOrAppStatus={'new'} kindForm={'todoList'}/>
 }
 
 
@@ -18,6 +18,8 @@ export const AddItemFormDisabledExample = (props: any) => {
     return <AddTaskOrTodoList
         disabled={true}
         addTodoList={() => {}}
+        todoListOrAppStatus={'new'}
+        kindForm={'todoList'}
     />
 }
 

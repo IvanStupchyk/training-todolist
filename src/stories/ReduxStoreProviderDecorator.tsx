@@ -34,7 +34,8 @@ let initialGlobalState = {
                 todoListId: '',
                 order: 0,
                 addedDate: '',
-                status: TaskStatuses.New
+                status: TaskStatuses.New,
+                taskStatus: 'new'
             },
             {
                 id: v1(),
@@ -47,7 +48,8 @@ let initialGlobalState = {
                 todoListId: '',
                 order: 0,
                 addedDate: '',
-                status: TaskStatuses.Completed
+                status: TaskStatuses.Completed,
+                taskStatus: 'new'
             },
             {
                 id: v1(),
@@ -60,7 +62,8 @@ let initialGlobalState = {
                 todoListId: '',
                 order: 0,
                 addedDate: '',
-                status: TaskStatuses.New
+                status: TaskStatuses.New,
+                taskStatus: 'new'
             }
         ],
         'todoListID2': []

@@ -3,7 +3,7 @@ enum ACTIONS_TYPE {
     SET_ERROR = 'sate/app-reducer/set-error'
 }
 
-export type statusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type statusType = 'idle' | 'loading' | 'succeeded' | 'addition' | 'failed'
 
 export type InitialStateType = {
     status: statusType
@@ -26,16 +26,16 @@ export const appReducer = (state: InitialStateType = initialState, action: Statu
     }
 }
 
-type setStatusType = ReturnType<typeof setStatus>
-export const setStatus = (status: statusType) => {
+export type setStatusType = ReturnType<typeof setAppStatus>
+export const setAppStatus = (status: statusType) => {
     return {
         type: ACTIONS_TYPE.SET_STATUS,
         status
     } as const
 }
 
-type setErrorType = ReturnType<typeof setError>
-export const setError = (error: null | string) => {
+export type setErrorType = ReturnType<typeof setAppError>
+export const setAppError = (error: null | string) => {
     return {
         type: ACTIONS_TYPE.SET_ERROR,
         error

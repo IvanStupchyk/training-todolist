@@ -1,13 +1,17 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
+import {statusType} from "../../state/app-reducer";
+import {todoListStatusType} from "../../state/todolists-reducer";
 
 type AddTaskOrTodoListPropsType = {
     addTodoList: (title: string) => void
     disabled?: boolean
+    todoListOrAppStatus: todoListStatusType | statusType
+    kindForm: 'task' | 'todoList'
 }
 
-export const AddTaskOrTodoList = React.memo(({addTodoList, disabled = false, ...restProps}: AddTaskOrTodoListPropsType) => {
+export const AddTaskOrTodoList = React.memo(({addTodoList, disabled = false, todoListOrAppStatus, kindForm, ...restProps}: AddTaskOrTodoListPropsType) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -26,6 +30,9 @@ export const AddTaskOrTodoList = React.memo(({addTodoList, disabled = false, ...
     }
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTask()
 
+    const disabledForm = todoListOrAppStatus === 'addition' &&  kindForm ==='task'
+        || todoListOrAppStatus === 'addition' && kindForm === 'todoList'
+
     return (
         <div>
             <TextField variant="outlined"
@@ -35,10 +42,10 @@ export const AddTaskOrTodoList = React.memo(({addTodoList, disabled = false, ...
                        onKeyPress={onKeyPressAddTask}
                        error={!!error}
                        helperText={error}
-                       disabled={disabled}
+                       disabled={disabledForm}
             />
 
-            <IconButton color="primary" onClick={addTask} disabled={disabled}>
+            <IconButton color="primary" onClick={addTask} disabled={disabledForm}>
                 <AddBox/>
             </IconButton>
         </div>

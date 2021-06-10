@@ -2,14 +2,14 @@ import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "../../EditableSpan/EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {deleteTaskTC, updateTaskTC} from "../../../state/tasks-reducer";
+import {deleteTaskTC, TaskWideVersionType, updateTaskTC} from "../../../state/tasks-reducer";
 import {useDispatch} from "react-redux";
-import {TaskStatuses, taskType} from "../../../API/api";
+import {TaskStatuses} from "../../../API/api";
 
 type TaskPropsType = {
     todoListID: string
     taskID: string
-    task: taskType
+    task: TaskWideVersionType
 }
 
 export const Task = React.memo(({todoListID, taskID, task, ...restProps}: TaskPropsType) => {
@@ -27,11 +27,11 @@ export const Task = React.memo(({todoListID, taskID, task, ...restProps}: TaskPr
 
     return (
         <li key={taskID} className={task.status === TaskStatuses.Completed ? 'is-done' : ''}>
-            <Checkbox checked={task.status === TaskStatuses.Completed} onChange={changeStatus}/>
+            <Checkbox checked={task.status === TaskStatuses.Completed} onChange={changeStatus} disabled={task.taskStatus === 'deletion' || task.taskStatus === 'edition'}/>
 
-            <EditableSpan title={task.title} changeValueEditableSpan={changeValueEditableSpan}/>
+            <EditableSpan title={task.title} changeValueEditableSpan={changeValueEditableSpan} taskStatus={task.taskStatus}/>
 
-            <IconButton aria-label="delete" onClick={deleteTask}>
+            <IconButton aria-label="delete" onClick={deleteTask} disabled={task.taskStatus === 'deletion'}>
                 <Delete fontSize="small"/>
             </IconButton>
         </li>

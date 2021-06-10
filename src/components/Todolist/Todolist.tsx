@@ -50,7 +50,7 @@ export const TodoList = React.memo(({todoList, demo = false,...restProps}: TodoL
     return (
         <div>
             <h3>
-                <EditableSpan title={todoList.title} changeValueEditableSpan={changeTodoListTitle}/>
+                <EditableSpan title={todoList.title} changeValueEditableSpan={changeTodoListTitle} taskStatus={todoList.entityStatus}/>
 
                 <Button onClick={deleteTodoList}
                         variant="contained"
@@ -58,13 +58,13 @@ export const TodoList = React.memo(({todoList, demo = false,...restProps}: TodoL
                         startIcon={<Delete/>}
                         size="small"
                         style={{margin: "0 10px"}}
-                        disabled={todoList.entityStatus === 'loading'}
+                        disabled={todoList.entityStatus === 'deletion'}
                 >
                     Delete
                 </Button>
             </h3>
 
-            <AddTaskOrTodoList addTodoList={addTask} disabled={todoList.entityStatus === 'loading'}/>
+            <AddTaskOrTodoList addTodoList={addTask} todoListOrAppStatus={todoList.entityStatus} kindForm={'task'}/>
 
             <ul style={{listStyle: "none"}}>
                 {actualArrayTasks.map(t => <Task

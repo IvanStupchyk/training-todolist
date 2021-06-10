@@ -76,7 +76,7 @@ type tasksType = {
     error: string
 }
 
-type addUpdateTaskType = {
+export type addUpdateTaskType = {
     data: {
         item: taskType
     }

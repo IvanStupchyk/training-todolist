@@ -5,6 +5,7 @@ import {addTodoListTC, getTodoListsTC, todoListDomainType} from "../../state/tod
 import {Grid, Paper} from "@material-ui/core";
 import {TodoList} from "../Todolist/Todolist";
 import {AddTaskOrTodoList} from "../AddTaskOrTodoList/AddTaskOrTodoList";
+import {statusType} from "../../state/app-reducer";
 
 type PropsType = {
     demo?: boolean
@@ -12,6 +13,7 @@ type PropsType = {
 
 export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false, ...restProps}) => {
     const todoLists = useSelector<AppRootState, Array<todoListDomainType>>(state => state.todoLists)
+    const appStatus = useSelector<AppRootState, statusType>(state => state.app.status)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -28,7 +30,7 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false, ...
     return (
         <div>
             <Grid container style={{padding: "10px 0"}}>
-                <AddTaskOrTodoList addTodoList={addTodoList}/>
+                <AddTaskOrTodoList addTodoList={addTodoList} todoListOrAppStatus={appStatus} kindForm={'todoList'}/>
             </Grid>
 
             <Grid container spacing={4}>

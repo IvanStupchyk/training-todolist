@@ -1,15 +1,13 @@
-import {addTodoListAC, deleteTodoListAC, todoListDomainType, todoListsReducer, TodoListType} from "./todolists-reducer";
-import {tasksReducer, TasksStateType} from "./tasks-reducer";
-import {v1} from "uuid";
-import {TaskPriorities, TaskStatuses} from "../API/api";
+import {addTodoListAC, deleteTodoListAC, todoListDomainType, todoListsReducer} from "./todolists-reducer";
+import {tasksReducer} from "./tasks-reducer";
 import {startTasksState} from "./tasks-reducer.test";
 
 let startTodoListsState: Array<todoListDomainType>
 
 beforeEach(() => {
     startTodoListsState = [
-        {id: 'todoListId1', title: 'What to learn', filter: 'all', addedDate: '', order: 2},
-        {id: 'todoListId2', title: 'What I know', filter: 'all', addedDate: '', order: 2},
+        {id: 'todoListId1', title: 'What to learn', filter: 'all', addedDate: '', order: 2, entityStatus: "new"},
+        {id: 'todoListId2', title: 'What I know', filter: 'all', addedDate: '', order: 2, entityStatus: "succeeded"},
     ]
 })
 

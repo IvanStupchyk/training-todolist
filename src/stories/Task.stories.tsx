@@ -27,7 +27,9 @@ export const TaskBaseExample = (props: any) => {
                   todoListId: '',
                   order: 0,
                   addedDate: '',
-                  status: TaskStatuses.New}}
+                  status: TaskStatuses.New,
+                  taskStatus: 'new'
+              }}
         />
         <Task todoListID={'todoListId2'}
               taskID={'2'}
@@ -42,7 +44,8 @@ export const TaskBaseExample = (props: any) => {
                   todoListId: '',
                   order: 0,
                   addedDate: '',
-                  status: TaskStatuses.Completed
+                  status: TaskStatuses.Completed,
+                  taskStatus: 'new'
               }}
         />
     </>
