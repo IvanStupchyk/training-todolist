@@ -70,7 +70,12 @@ let initialGlobalState = {
     },
     app: {
         status: 'idle',
-        error: null
+        error: null,
+        initialized: false
+
+    },
+    auth: {
+        isLoggedIn: false
     }
 }
 

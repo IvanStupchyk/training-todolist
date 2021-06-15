@@ -1,13 +1,13 @@
 import {
     ACTIONS_TODOLIST_TYPE,
-    addTodoListType,
+    addTodoListAC,
     changeTodoListEntityStatusAC,
     deleteTodoListType,
     getTodoListsType,
 } from "./todolists-reducer";
 import {taskAPI, taskType, updateTaskModelType} from "../API/api";
 import {AppRootState, AppThunkType} from "./redux-store";
-import {setAppError, setAppStatus, statusType} from "./app-reducer";
+import {setAppStatus} from "./app-reducer";
 import {handleNetworkError, handleServerAppError} from "../utils/error-utils";
 
 export enum ACTIONS_TYPE {
@@ -190,7 +190,7 @@ export type tasksActionsType = deleteTaskType
     | addTaskType
     | updateTaskType
     | deleteTodoListType
-    | addTodoListType
+    | ReturnType<typeof addTodoListAC>
     | getTodoListsType
     | setTasksType
     | changeTaskStatusType

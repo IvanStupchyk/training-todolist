@@ -1,9 +1,9 @@
-import {setAppError, setAppStatus, setErrorType, setStatusType} from "../state/app-reducer";
-import {addUpdateTaskType} from "../API/api";
-import {useDispatch} from "react-redux";
+import {setAppError, setAppStatus} from "../state/app-reducer";
+import {ResponseType} from "../API/api";
 import {Dispatch} from "redux";
 
-export const handleServerAppError = (response: addUpdateTaskType, dispatch: Dispatch<setStatusType | setErrorType>) => {
+type handleServerAppErrorDispatchType = ReturnType<typeof setAppError> | ReturnType<typeof setAppStatus>
+export const handleServerAppError = <D>(response: ResponseType<D>, dispatch: Dispatch<handleServerAppErrorDispatchType>) => {
     if (response.messages.length) {
         dispatch(setAppError(response.messages[0]))
     } else {
@@ -12,7 +12,7 @@ export const handleServerAppError = (response: addUpdateTaskType, dispatch: Disp
     dispatch(setAppStatus('failed'))
 }
 
-export const handleNetworkError = (error: {message: string}, dispatch: Dispatch<setStatusType | setErrorType>) => {
+export const handleNetworkError = (error: {message: string}, dispatch: Dispatch<handleServerAppErrorDispatchType>) => {
     dispatch(setAppError(error.message ? error.message : 'Some error occurred'))
     dispatch(setAppStatus('idle'))
 }

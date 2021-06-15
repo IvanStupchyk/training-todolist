@@ -32,6 +32,7 @@ export const AddTaskOrTodoList = React.memo(({addTodoList, disabled = false, tod
 
     const disabledForm = todoListOrAppStatus === 'addition' &&  kindForm ==='task'
         || todoListOrAppStatus === 'addition' && kindForm === 'todoList'
+        || todoListOrAppStatus === 'deletion'
 
     return (
         <div>

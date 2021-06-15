@@ -6,6 +6,7 @@ import {Grid, Paper} from "@material-ui/core";
 import {TodoList} from "../Todolist/Todolist";
 import {AddTaskOrTodoList} from "../AddTaskOrTodoList/AddTaskOrTodoList";
 import {statusType} from "../../state/app-reducer";
+import {Redirect} from "react-router-dom";
 
 type PropsType = {
     demo?: boolean
@@ -14,10 +15,11 @@ type PropsType = {
 export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false, ...restProps}) => {
     const todoLists = useSelector<AppRootState, Array<todoListDomainType>>(state => state.todoLists)
     const appStatus = useSelector<AppRootState, statusType>(state => state.app.status)
+    const isLoggedIn = useSelector<AppRootState, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(getTodoListsTC())
@@ -26,6 +28,10 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false, ...
     const addTodoList = useCallback((title: string) => {
         dispatch(addTodoListTC(title))
     }, [dispatch])
+
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
+    }
 
     return (
         <div>

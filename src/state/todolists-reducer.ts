@@ -1,6 +1,7 @@
 import {todoListAPI} from "../API/api";
 import {AppThunkType} from "./redux-store";
-import {setAppStatus, statusType} from "./app-reducer";
+import {setAppStatus} from "./app-reducer";
+import {handleNetworkError, handleServerAppError} from "../utils/error-utils";
 
 export enum ACTIONS_TODOLIST_TYPE {
     ADD_NEW_TODOLIST = 'todoList/todolists-actions/add-new-todolist',
@@ -86,6 +87,9 @@ export const getTodoListsTC = (): AppThunkType => (dispatch) => {
             dispatch(getTodoListsAC(res.data))
             dispatch(setAppStatus('succeeded'))
         })
+        .catch(error => {
+            handleNetworkError(error, dispatch)
+        })
 }
 
 export const deleteTodoListTC = (todoListId: string): AppThunkType => (dispatch) => {
@@ -126,12 +130,12 @@ export type todoListDomainType = TodoListType & {
     entityStatus: todoListStatusType
 }
 export type getTodoListsType = ReturnType<typeof getTodoListsAC>
-export type addTodoListType = ReturnType<typeof addTodoListAC>
+// export type addTodoListType = ReturnType<typeof addTodoListAC>
 export type changeTodoListFilterValueType = ReturnType<typeof changeTodoListFilterValueAC>
 export type changeTodoListEntityStatusType = ReturnType<typeof changeTodoListEntityStatusAC>
 export type changeTodoListTitleType = ReturnType<typeof changeTodoListTitleAC>
 export type deleteTodoListType = ReturnType<typeof deleteTodoListAC>
-export type todoListActionsType = addTodoListType
+export type todoListActionsType = ReturnType<typeof addTodoListAC>
     | changeTodoListFilterValueType
     | changeTodoListTitleType
     | deleteTodoListType

@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 import {statusType} from "../../state/app-reducer";
 import {taskStatusType} from "../../state/tasks-reducer";
+import s from './EditableSpan.module.scss'
 
 type EditableSpanPropsType = {
     title: string
@@ -32,8 +33,9 @@ export const EditableSpan = React.memo(({title, changeValueEditableSpan, taskSta
                 value={value}
                 onChange={changeValue}
                 disabled={taskStatus === 'deletion'}
+                className={s.textFieldContainer}
             />
             :
-            <span onDoubleClick={changeInput}>{title}</span>
+            <span onDoubleClick={changeInput} className={s.outputSpanContainer}>{title}</span>
     )
 })

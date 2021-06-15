@@ -5,6 +5,7 @@ import {Delete} from "@material-ui/icons";
 import {deleteTaskTC, TaskWideVersionType, updateTaskTC} from "../../../state/tasks-reducer";
 import {useDispatch} from "react-redux";
 import {TaskStatuses} from "../../../API/api";
+import st from './Task.module.scss'
 
 type TaskPropsType = {
     todoListID: string
@@ -26,7 +27,7 @@ export const Task = React.memo(({todoListID, taskID, task, ...restProps}: TaskPr
     }, [dispatch, taskID, todoListID])
 
     return (
-        <li key={taskID} className={task.status === TaskStatuses.Completed ? 'is-done' : ''}>
+        <li key={taskID} className={`${st.taskPosition} ${task.status === TaskStatuses.Completed ? st.taskDone : ''}`}>
             <Checkbox checked={task.status === TaskStatuses.Completed} onChange={changeStatus} disabled={task.taskStatus === 'deletion' || task.taskStatus === 'edition'}/>
 
             <EditableSpan title={task.title} changeValueEditableSpan={changeValueEditableSpan} taskStatus={task.taskStatus}/>

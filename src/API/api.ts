@@ -15,7 +15,7 @@ type todoListType = {
     title: string
 }
 
-type ResponseType<D> = {
+export type ResponseType<D> = {
     data: D
     fieldsErrors: Array<string>
     messages: Array<string>
@@ -76,19 +76,12 @@ type tasksType = {
     error: string
 }
 
-export type addUpdateTaskType = {
-    data: {
-        item: taskType
-    }
-    resultCode: number
-    messages: Array<string>
-}
 
-type deleteTaskType = {
-    resultCode: number
-    messages: Array<string>
-    data: {}
-}
+// type deleteTaskType = {
+//     resultCode: number
+//     messages: Array<string>
+//     data: {}
+// }
 
 export type updateTaskModelType = {
     title: string
@@ -106,14 +99,32 @@ export const taskAPI = {
     },
 
     addTask(todoListId: string, title: string) {
-        return instance.post<addUpdateTaskType>(`todo-lists/${todoListId}/tasks`, {title: title})
+        return instance.post<ResponseType<{item: taskType}>>(`todo-lists/${todoListId}/tasks`, {title: title})
     },
 
     deleteTask(todoListId: string, taskId: string) {
-        return instance.delete<deleteTaskType>(`todo-lists/${todoListId}/tasks/${taskId}`)
+        return instance.delete<ResponseType<{}>>(`todo-lists/${todoListId}/tasks/${taskId}`)
     },
 
     updateTask(todoListId: string, taskId: string, model: updateTaskModelType) {
-        return instance.put<addUpdateTaskType>(`todo-lists/${todoListId}/tasks/${taskId}`, {...model})
+        return instance.put<ResponseType<{item: taskType}>>(`todo-lists/${todoListId}/tasks/${taskId}`, {...model})
+    }
+}
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
+}
+export const authAPI = {
+    login(params: LoginParamsType) {
+        return instance.post<ResponseType<{userId?: number}>>('auth/login', {...params})
+    },
+    logOut() {
+        return instance.delete<ResponseType<{}>>('auth/login')
+    },
+    me() {
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>('/auth/me')
     }
 }
