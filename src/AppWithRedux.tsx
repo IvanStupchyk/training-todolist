@@ -16,7 +16,7 @@ import {AppRootState} from "./state/redux-store";
 import {CustomizedSnackbars} from "./components/ErrorSnackbar/ErrorSnackbar";
 import {appInitialized, statusType} from "./state/app-reducer";
 import {TodoListsList} from "./components/TodoListsList/TodoListsList";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 import {logout} from "./features/Login/login-reducer";
 
@@ -62,8 +62,11 @@ function AppWithRedux({demo = false, ...restProps}: PropsType) {
                 </AppBar>
                 <CustomizedSnackbars/>
                 <Container fixed>
-                    <Route exact path={'/'} render={() => <TodoListsList demo={demo}/>}/>
-                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Switch>
+                        <Route exact path={'/'} render={() => <TodoListsList demo={demo}/>}/>
+                        <Route path={'/login'} render={() => <Login/>}/>
+                        <Route path={'*'} render={() => <h1>PAGE NOT FOUND</h1>}/>
+                    </Switch>
                 </Container>
             </div>
         </BrowserRouter>

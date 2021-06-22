@@ -44,9 +44,9 @@ export const TodoList = React.memo(({todoList, demo = false,...restProps}: TodoL
     const deleteTodoList = useCallback(() => dispatch(deleteTodoListTC(todoList.id)), [dispatch, todoList.id])
     const addTask = useCallback((title: string) => dispatch(addTaskTC(todoList.id, title)), [dispatch, todoList.id])
     const changeTodoListTitle = useCallback((value: string) => dispatch(changeTodoListTitleTC(todoList.id, value)), [dispatch, todoList.id])
-    const setAllFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoList.id, 'all')), [dispatch, todoList.id])
-    const setActiveFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoList.id, 'active')), [dispatch, todoList.id])
-    const setCompletedFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC(todoList.id, 'completed')), [dispatch, todoList.id])
+    const setAllFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC({todoListID: todoList.id, filter: 'all'} )), [dispatch, todoList.id])
+    const setActiveFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC({todoListID: todoList.id, filter: 'active'})), [dispatch, todoList.id])
+    const setCompletedFilterValue = useCallback(() => dispatch(changeTodoListFilterValueAC({todoListID: todoList.id, filter: 'completed'})), [dispatch, todoList.id])
 
     return (
         <div>
