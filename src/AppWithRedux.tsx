@@ -16,7 +16,7 @@ import {AppRootState} from "./state/redux-store";
 import {CustomizedSnackbars} from "./components/ErrorSnackbar/ErrorSnackbar";
 import {appInitialized, statusType} from "./state/app-reducer";
 import {TodoListsList} from "./components/TodoListsList/TodoListsList";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 import {logout} from "./features/Login/login-reducer";
 
@@ -44,7 +44,7 @@ function AppWithRedux({demo = false, ...restProps}: PropsType) {
         </div>
     }
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className={s.app}>
                 <AppBar position="static" className={s.headerPosition}>
                     <Toolbar style={{justifyContent: "space-between"}}>
@@ -69,7 +69,7 @@ function AppWithRedux({demo = false, ...restProps}: PropsType) {
                     </Switch>
                 </Container>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

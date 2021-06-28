@@ -15,7 +15,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../state/redux-store";
 import {Task} from "./Task/Task";
 import {TaskStatuses} from "../../API/api";
-import {Redirect} from "react-router-dom";
 
 type TodoListPropsType = {
     todoList: todoListDomainType

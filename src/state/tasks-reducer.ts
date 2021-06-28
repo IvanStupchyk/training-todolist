@@ -1,47 +1,34 @@
-import {
-    ACTIONS_TODOLIST_TYPE,
-    addTodoListAC,
-    changeTodoListEntityStatusAC,
-    deleteTodoListAC,
-    getTodoListsAC
-} from "./todolists-reducer";
+import {addTodoListAC, changeTodoListEntityStatusAC, deleteTodoListAC, getTodoListsAC} from "./todolists-reducer";
 import {taskAPI, taskType, updateTaskModelType} from "../API/api";
 import {AppRootState} from "./redux-store";
 import {setAppStatus} from "./app-reducer";
 import {handleNetworkError, handleServerAppError} from "../utils/error-utils";
 import {Dispatch} from "redux";
-import {createAction, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export enum ACTIONS_TYPE {
-    DELETE_TASK = 'todoList/tasks-reducer/delete-task',
-    ADD_TASK = 'todoList/tasks-reducer/add-task',
-    UPDATE_TASK = 'todoList/tasks-reducer/update-task',
-    SET_TASKS = 'todoList/tasks-reducer/set-tasks',
-    CHANGE_TASK_STATUS = 'todoList/tasks-reducer/change-task-status',
-}
+
 export let initialState: TasksStateType = {}
 
 const slice = createSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: {
-        deleteTaskAC(state, action: PayloadAction<{taskId: string, todoListId: string}>) {
+        deleteTaskAC(state, action: PayloadAction<{ taskId: string, todoListId: string }>) {
             let index = state[action.payload.todoListId].findIndex(t => t.id === action.payload.taskId)
             if (index > -1) state[action.payload.todoListId].splice(index, 1)
         },
-        addTaskAC(state, action: PayloadAction<{task: taskType}>) {
+        addTaskAC(state, action: PayloadAction<{ task: taskType }>) {
             state[action.payload.task.todoListId].unshift({...action.payload.task, taskStatus: 'new'})
         },
-        updateTaskAC(state, action: PayloadAction<{todoListId: string, taskId: string, apiModel: updateTaskModelType}>) {
+        updateTaskAC(state, action: PayloadAction<{ todoListId: string, taskId: string, apiModel: updateTaskModelType }>) {
             let task = state[action.payload.todoListId]
             let index = task.findIndex(t => t.id === action.payload.taskId)
             if (index > -1) task[index] = {...task[index], ...action.payload.apiModel}
         },
-        setTasksAC(state, action: PayloadAction<{tasks: Array<taskType>, todoListId: string}>) {
+        setTasksAC(state, action: PayloadAction<{ tasks: Array<taskType>, todoListId: string }>) {
             state[action.payload.todoListId] = action.payload.tasks.map(t => ({...t, taskStatus: 'new'}))
         },
-        changeTaskStatus(state, action: PayloadAction<{taskStatus: taskStatusType, todoListId: string, taskId: string}>) {
-            debugger
+        changeTaskStatus(state, action: PayloadAction<{ taskStatus: taskStatusType, todoListId: string, taskId: string }>) {
             let task = state[action.payload.todoListId]
             let index = task.findIndex(t => t.id === action.payload.taskId)
             if (index > -1) task[index].taskStatus = action.payload.taskStatus
@@ -60,93 +47,10 @@ const slice = createSlice({
             delete state[action.payload.todoListId]
         })
     }
-    // [deleteTodoListAC.type]: (state, action: PayloadAction<{}>) => {
-    //
-    // },
-    // [getTodoListsAC.type]: (state, action: PayloadAction<{}>) => {
-    //
-    // },
 })
 
 export const tasksReducer = slice.reducer
-// export const tasksReducer = (state = initialState, action: tasksActionsType): TasksStateType => {
-//     switch (action.type) {
-//         case ACTIONS_TYPE.SET_TASKS:
-//             return {...state, [action.todoListId]: action.tasks.map(t => ({...t, taskStatus: 'new'}))}
-//         case ACTIONS_TYPE.ADD_TASK:
-//             return {
-//                 ...state,
-//                 [action.task.todoListId]: [{...action.task, taskStatus: 'new'}, ...state[action.task.todoListId]]
-//             }
-//         case ACTIONS_TYPE.UPDATE_TASK:
-//             return {
-//                 ...state,
-//                 [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {...t, ...action.apiModel} : t)
-//             }
-//         case ACTIONS_TYPE.CHANGE_TASK_STATUS:
-//             return {
-//                 ...state,
-//                 [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
-//                     ...t,
-//                     taskStatus: action.taskStatus
-//                 } : t)
-//             }
-//         case ACTIONS_TYPE.DELETE_TASK:
-//             return {...state, [action.todoListId]: state[action.todoListId].filter(t => t.id !== action.taskId)}
-//         case ACTIONS_TODOLIST_TYPE.ADD_NEW_TODOLIST:
-//             return {...state, [action.payload.todoList.id]: []}
-//         case ACTIONS_TODOLIST_TYPE.DELETE_TODOLIST:
-//             delete state[action.todoListId]
-//             return {...state}
-//         case ACTIONS_TODOLIST_TYPE.GET_TODOLISTS:
-//             let copyState = {...state}
-//             action.todolists.forEach(tl => {
-//                 copyState[tl.id] = []
-//             })
-//             return copyState
-//         default:
-//             return state
-//     }
-// }
-
 export const {deleteTaskAC, addTaskAC, updateTaskAC, setTasksAC, changeTaskStatus} = slice.actions
-//actions
-// export const deleteTaskAC = (taskId: string, todoListId: string) => {
-//     return {
-//         type: ACTIONS_TYPE.DELETE_TASK,
-//         taskId,
-//         todoListId
-//     } as const
-// }
-// export const addTaskAC = (task: taskType) => {
-//     return {
-//         type: ACTIONS_TYPE.ADD_TASK,
-//         task
-//     } as const
-// }
-// export const updateTaskAC = (todoListId: string, taskId: string, apiModel: updateTaskModelType) => {
-//     return {
-//         type: ACTIONS_TYPE.UPDATE_TASK,
-//         taskId,
-//         todoListId,
-//         apiModel
-//     } as const
-// }
-// export const setTasksAC = (tasks: Array<taskType>, todoListId: string) => {
-//     return {
-//         type: ACTIONS_TYPE.SET_TASKS,
-//         tasks,
-//         todoListId
-//     } as const
-// }
-// export const changeTaskStatus = (taskStatus: taskStatusType, todoListId: string, taskId: string) => {
-//     return {
-//         type: ACTIONS_TYPE.CHANGE_TASK_STATUS,
-//         taskStatus,
-//         todoListId,
-//         taskId
-//     } as const
-// }
 
 //thunks
 export const setTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
