@@ -13,6 +13,8 @@ const rootReducer = combineReducers({
     auth: authReducer
 })
 
+export type rootReducerType = typeof rootReducer
+
 export type AppRootState = ReturnType<typeof rootReducer>
 
 export const store = configureStore({

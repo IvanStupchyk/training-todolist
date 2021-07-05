@@ -12,7 +12,6 @@ beforeEach(() => {
 })
 
 test('it\'s should be equals', () => {
-
     const todoList = {
         id: 'todoListId3',
         addedDate: '',
@@ -20,7 +19,7 @@ test('it\'s should be equals', () => {
         order: 3
     }
 
-    const action = addTodoListAC(todoList)
+    const action = addTodoListAC({todoList})
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodoListsState = todoListsReducer(startTodoListsState, action)
 
@@ -34,7 +33,7 @@ test('it\'s should be equals', () => {
 
 test('property with todoListId should be deleted ', () => {
 
-    const action = deleteTodoListAC('todoListId2')
+    const action = deleteTodoListAC({todoListId: 'todoListId2'})
     const endState = tasksReducer(startTasksState, action)
 
     const keys = Object.keys(endState)

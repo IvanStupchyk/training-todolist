@@ -18,7 +18,7 @@ beforeEach(() => {
 
 
 test('todoList\'s name should be changed', () => {
-    const endState = todoListsReducer(startTodoListsState, changeTodoListTitleAC('todoListId1', 'Tratata'))
+    const endState = todoListsReducer(startTodoListsState, changeTodoListTitleAC({todoListId: 'todoListId1', title: 'Tratata'}))
 
     expect(endState[0].title).toBe('Tratata')
 })
@@ -31,25 +31,25 @@ test('todoLists length should be changed', () => {
         order: 3
     }
 
-    const endState = todoListsReducer(startTodoListsState, addTodoListAC(todoList))
+    const endState = todoListsReducer(startTodoListsState, addTodoListAC({todoList}))
 
     expect(endState.length).toBe(3)
 })
 
 test('certain TodoList should be deleted', () => {
-    const endState = todoListsReducer(startTodoListsState, deleteTodoListAC('todoListId2'))
+    const endState = todoListsReducer(startTodoListsState, deleteTodoListAC({todoListId: 'todoListId2'}))
 
     expect(endState.length).toBe(1)
 })
 
 test('certain TodoList filter value should be changed', () => {
-    const endState = todoListsReducer(startTodoListsState, changeTodoListFilterValueAC('todoListId1', 'completed'))
+    const endState = todoListsReducer(startTodoListsState, changeTodoListFilterValueAC({filter: 'completed', todoListID: 'todoListId1'}))
 
     expect(endState[0].filter).toBe('completed')
 })
 
 test('certain TodoList status value should be changed', () => {
-    const endState = todoListsReducer(startTodoListsState, changeTodoListEntityStatusAC('todoListId1', 'deletion'))
+    const endState = todoListsReducer(startTodoListsState, changeTodoListEntityStatusAC({todoListId: 'todoListId1', entityStatus: 'deletion'}))
 
     expect(endState[0].entityStatus).toBe('deletion')
 })

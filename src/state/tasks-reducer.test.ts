@@ -69,7 +69,7 @@ beforeEach(() => {
 })
 
 test('Task should be deleted', () => {
-    const endTasks = tasksReducer(startTasksState, deleteTaskAC('1', 'todoListId1'))
+    const endTasks = tasksReducer(startTasksState, deleteTaskAC({todoListId: 'todoListId1', taskId: '1'}))
 
     expect(endTasks['todoListId1'].length).toBe(1)
 })
@@ -106,9 +106,9 @@ test('Task status should be changed', () => {
         deadline: ''
     }
 
-    // const endTasks = tasksReducer(startTasksState, updateTaskAC('todoListId1', '1', apiModel))
-    //
-    // expect(endTasks['todoListId1'][0].status).toBe(2)
+    const endTasks = tasksReducer(startTasksState, updateTaskAC({taskId: '1', todoListId: 'todoListId1', apiModel}))
+
+    expect(endTasks['todoListId1'][0].status).toBe(2)
 })
 
 
@@ -123,7 +123,7 @@ test('Task content should be changed', () => {
         deadline: ''
     }
 
-    // const endTasks = tasksReducer(startTasksState, updateTaskAC('todoListId1', '1', apiModel))
-    //
-    // expect(endTasks['todoListId1'][0].title).toBe('first task changed')
+    const endTasks = tasksReducer(startTasksState, updateTaskAC({taskId: '1', todoListId: 'todoListId1', apiModel}))
+
+    expect(endTasks['todoListId1'][0].title).toBe('first task changed')
 })
